@@ -50,4 +50,5 @@ services:
 
 networks:
   traefik-net:
+    name: traefik-net
     driver: overlay
