@@ -3,11 +3,21 @@ services:
   traefik:
     image: traefik:2.9
     command:
-      #- --api
-      - --docker
+      - --entrypoints.http.address=:80
+
+      - --entrypoints.https.address=:443
+      - --api=false
+      - --api.dashboard=false
+      - --providers.docker
       - --docker.swarmmode
       - --docker.domain=dev.launchpad.hu
       - --docker.watch
+
+      - --certificatesresolvers.leresolver.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
+      - --certificatesresolvers.leresolver.acme.email=webmaster@launchpad.hu
+      - --certificatesresolvers.leresolver.acme.storage=/acme.json
+      - --certificatesresolvers.leresolver.acme.tlschallenge=true
+
     ports:
       - "80:80"
       - "8080:8080"
@@ -18,6 +28,21 @@ services:
     deploy:
       placement:
         constraints: [node.role == manager]
+      labels:
+        # Dashboard
+        #- "traefik.http.routers.api.rule=Host(`traefik.dokku.me`)"
+        #- "traefik.http.routers.api.service=api@internal"
+        #- "traefik.http.routers.api.entrypoints=https"
+        #- "traefik.http.routers.api.middlewares=auth"
+
+        - "traefik.http.routers.api.tls.certresolver=leresolver"
+          # global redirect to https
+        - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
+        - "traefik.http.routers.http-catchall.entrypoints=http"
+        - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
+
+        # middleware redirect
+        - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
 
 networks:
   traefik-net:
