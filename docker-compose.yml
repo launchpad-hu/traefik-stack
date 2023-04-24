@@ -34,9 +34,10 @@ services:
         # Dashboard
         - "traefik.http.routers.traefik-api.rule=Host(`traefik.dev.launchpad.hu`)"
         - "traefik.http.routers.traefik-api.service=traefik"
+        - "traefik.http.services.traefik.loadbalancer.server.port=8080"
         - "traefik.http.routers.traefik-api.entrypoints=https"
         - "traefik.http.routers.traefik-api.middlewares=auth"
-        - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+        - "traefik.http.middlewares.auth.basicauth.users=admin:$$2y$$05$$YI8L5CpywtbEevrdhVctIehU.lvHDpE5pg7JBWI8mYVDs6yDxlHzG"
         - "traefik.http.routers.traefik-api.tls.certresolver=leresolver"
 
           # global redirect to https
