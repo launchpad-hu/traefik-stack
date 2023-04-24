@@ -4,15 +4,13 @@ services:
     image: traefik:2.9
     command:
       - --entrypoints.http.address=:80
-
       - --entrypoints.https.address=:443
+
       - --api=false
       - --api.dashboard=false
-      #- --docker
-      - --docker.swarmmode
-      #- --docker.domain=dev.launchpad.hu
-      #- --docker.watch
-      - --log.level=INFO
+
+      - --providers.docker
+      - --providers.docker.swarmmode
 
       - --certificatesresolvers.leresolver.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
       - --certificatesresolvers.leresolver.acme.email=webmaster@launchpad.hu
