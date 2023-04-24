@@ -30,13 +30,14 @@ services:
       placement:
         constraints: [node.role == manager]
       labels:
+        - "traefik.enable=true"
         # Dashboard
-        - "traefik.http.routers.api.rule=Host(`traefik.dev.launchpad.hu`)"
-        - "traefik.http.routers.api.service=api@internal"
-        - "traefik.http.routers.api.entrypoints=https"
-        - "traefik.http.routers.api.middlewares=auth"
-
-        - "traefik.http.routers.api.tls.certresolver=leresolver"
+        - "traefik.http.routers.traefik-api.rule=Host(`traefik.dev.launchpad.hu`)"
+        - "traefik.http.routers.traefik-api.service=traefik"
+        - "traefik.http.routers.traefik-api.entrypoints=https"
+        - "traefik.http.routers.traefik-api.middlewares=auth"
+        - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+        - "traefik.http.routers.api.traefik-api.certresolver=leresolver"
 
           # global redirect to https
         - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
