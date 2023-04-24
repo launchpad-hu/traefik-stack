@@ -37,7 +37,7 @@ services:
         - "traefik.http.routers.traefik-api.entrypoints=https"
         - "traefik.http.routers.traefik-api.middlewares=auth"
         - "traefik.http.services.traefik.loadbalancer.server.port=8080"
-        - "traefik.http.routers.api.traefik-api.certresolver=leresolver"
+        - "traefik.http.routers.traefik-api.tls.certresolver=leresolver"
 
           # global redirect to https
         - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
