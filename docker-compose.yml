@@ -9,7 +9,7 @@ services:
       - --api=false
       - --api.dashboard=false
       #- --docker
-      #- --docker.swarmmode
+      - --docker.swarmmode
       #- --docker.domain=dev.launchpad.hu
       #- --docker.watch
       - --log.level=INFO
