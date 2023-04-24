@@ -51,4 +51,5 @@ services:
 networks:
   traefik-net:
     name: traefik-net
+    attachable: true
     driver: overlay
