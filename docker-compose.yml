@@ -9,6 +9,7 @@ services:
       - --api=true
       - --api.dashboard=true
       - --api.insecure=true
+      - --log.level=INFO
 
       - --providers.docker=true
       - --providers.docker.swarmMode=true
@@ -27,6 +28,7 @@ services:
       - certs:/etc/certs
     networks:
       - traefik-net
+    
     deploy:
       placement:
         constraints: [node.role == manager]
