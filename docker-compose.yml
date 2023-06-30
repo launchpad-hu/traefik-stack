@@ -11,7 +11,8 @@ services:
       - --api.insecure=true
 
       - --providers.docker=true
-      - --providers.docker.swarmmode=true
+      - --providers.docker.swarmMode=true
+      - --providers.docker.exposedByDefault=false
 
       - --certificatesresolvers.leresolver.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
       - --certificatesresolvers.leresolver.acme.email=webmaster@launchpad.hu
